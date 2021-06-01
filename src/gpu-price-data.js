@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const gpuPriceChartData = {
 	type: "line",
 	data: {
@@ -34,5 +36,15 @@ export const gpuPriceChartData = {
 		}
 	}
 };
-  
+
+function pushDate() {
+	return moment().format('YYYY-MM-DD');
+}
+
+
+gpuPriceChartData.data.labels.push(pushDate())
+gpuPriceChartData.data.datasets[0].data.push("420")
+gpuPriceChartData.data.datasets[1].data.push("420")
+
+
 export default gpuPriceChartData;
