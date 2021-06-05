@@ -1,4 +1,6 @@
 import moment from "moment";
+import puppeteer from "puppeteer";
+
 
 export const gpuPriceChartData = {
 	type: "line",
@@ -43,6 +45,26 @@ export const gpuPriceChartData = {
 		2/ create function to get price
 		3/ create function to push to data every specific time
 */
+
+
+(async () => {
+	let urlGPU = "https://www.enterkomputer.com/search/data?q=rtx+3060";
+	
+	let browser = await puppeteer.launch({ headless: false });
+	let page = await browser.newPage();
+
+	await page.goto(urlGPU, { waitUntil: "networkidle2" });
+
+	let data = await page.evaluate(() => {
+		let price = document.querySelector("div[class='p-price mt-1 mr-2']").firstChild.textContent;
+		return {
+			price
+		}
+	});
+	console.log(data);
+
+	await browser.close();	
+})();
 
 
 function pushDate() {
